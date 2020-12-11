@@ -22,7 +22,7 @@
 #include "../crc/murmur3.h"
 #include "../crc/fnv.h"
 #include "../hash.h"
-
+#include "../crc/lz4.h"
 #include "test.h"
 
 #define CHUNK		  4096U
@@ -104,9 +104,14 @@ static void t_crc16(struct test_type *t, void *buf, size_t size)
 static void t_crc7(struct test_type *t, void *buf, size_t size)
 {
 	int i;
+    LZ4_stream_t ctx;
+    LZ4_stream_t* const ctxPtr = &ctx;
+
 
 	for (i = 0; i < NR_CHUNKS; i++)
-		t->output += fio_crc7(buf, size);
+        LZ4_compress_fast_extState(ctxPtr, buf, null, size, size, 0);
+
+	    //t->output += fio_crc7(buf, size);
 }
 
 static void t_sha1(struct test_type *t, void *buf, size_t size)
