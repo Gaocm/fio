@@ -106,10 +106,11 @@ static void t_crc7(struct test_type *t, void *buf, size_t size)
 	int i;
     LZ4_stream_t ctx;
     LZ4_stream_t* const ctxPtr = &ctx;
+    void *out;
 
 
 	for (i = 0; i < NR_CHUNKS; i++)
-        LZ4_compress_fast_extState(ctxPtr, buf, null, size, size, 0);
+        LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
 
 	    //t->output += fio_crc7(buf, size);
 }
