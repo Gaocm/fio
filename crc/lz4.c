@@ -1274,6 +1274,7 @@ LZ4_FORCE_INLINE int LZ4_compress_generic(
     }
     assert(src != NULL);
 
+    printf("lz4 compress \n");
     return LZ4_compress_generic_validated(cctx, src, dst, srcSize,
                 inputConsumed, /* only written into if outputDirective == fillOutput */
                 dstCapacity, outputDirective,
