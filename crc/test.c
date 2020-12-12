@@ -382,6 +382,7 @@ int fio_crctest(const char *type)
 	char *temp;
     unsigned long long this_len;
     unsigned int perc;
+    unsigned int this_write;
 
 	crc32c_arm64_probe();
 	crc32c_intel_probe();
@@ -400,7 +401,7 @@ int fio_crctest(const char *type)
 
 	this_write = CHUNK;
 	perc = 80;
-    this_len = ((unsigned int)this_write * (100 - perc)) / 100;
+    this_len = ((unsigned long long)this_write * (100 - perc)) / 100;
 	buf = malloc(CHUNK);
     memset(buf, 0, CHUNK);
 	init_rand_seed(&state, 0x8989, 0);
