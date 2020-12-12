@@ -399,7 +399,7 @@ int fio_crctest(const char *type)
 	}
 
 	this_write = CHUNK;
-	perc = 100;
+	perc = 50;
     this_len = ((unsigned long long)this_write * (100 - perc)) / 100;
 	buf = malloc(CHUNK);
     //memset(buf, 0, CHUNK);
