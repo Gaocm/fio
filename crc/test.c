@@ -108,7 +108,6 @@ static void t_crc7(struct test_type *t, void *buf, size_t size)
     LZ4_stream_t* const ctxPtr = &ctx;
     char *out;
 
-    printf("start compress\n");
 
 //	for (i = 0; i < NR_CHUNKS; i++)
         LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
@@ -400,7 +399,7 @@ int fio_crctest(const char *type)
 	}
 
 	this_write = CHUNK;
-	perc = 80;
+	perc = 100;
     this_len = ((unsigned long long)this_write * (100 - perc)) / 100;
 	buf = malloc(CHUNK);
     //memset(buf, 0, CHUNK);
@@ -426,7 +425,6 @@ int fio_crctest(const char *type)
 			t[i].fn(&t[i], buf, CHUNK);
 		}
 
-        printf("finish first round\n");
 		fio_gettime(&ts, NULL);
 		t[i].fn(&t[i], buf, CHUNK);
 		usec = utime_since_now(&ts);

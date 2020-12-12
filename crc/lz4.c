@@ -410,8 +410,8 @@ void LZ4_wildCopy8(void* dstPtr, const void* srcPtr, void* dstEnd)
     BYTE* d = (BYTE*)dstPtr;
     const BYTE* s = (const BYTE*)srcPtr;
     BYTE* const e = (BYTE*)dstEnd;
-    printf("memcpy start\n");
-    do { LZ4_memcpy(d,s,8); printf("memcpy start %d\t%d\n",d,s); d+=8; s+=8; } while (d<e);
+
+    do { LZ4_memcpy(d,s,8); d+=8; s+=8; } while (d<e);
 }
 
 static const unsigned inc32table[8] = {0, 1, 2,  1,  0,  4, 4, 4};
@@ -1036,32 +1036,21 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
                 goto _last_literals;
             }
 
-            printf("start compress does not goto\n");
             if (litLength >= RUN_MASK) {
-                printf("start compress run mask 1\n");
                 int len = (int)(litLength - RUN_MASK);
-                printf("start compress run mask 2\t%i\n",(int)token);
-                token = (BYTE)(RUN_MASK<<ML_BITS);
-                printf("start compress run mask 3\n");
-                for(; len >= 255 ; len-=255)
-                {op = 255; op++;}
-                printf("start compress run mask 4\n");
-                op = (BYTE)len;
-                op++;
-                printf("start compress run mask 5\n");
+                *token = (RUN_MASK<<ML_BITS);
+                for(; len >= 255 ; len-=255) *op++ = 255;
+                *op++ = (BYTE)len;
             }
             else *token = (BYTE)(litLength<<ML_BITS);
 
-            printf("start compress start copy\n");
             /* Copy Literals */
             LZ4_wildCopy8(op, anchor, op+litLength);
-            printf("start compress end copy\n");
             op+=litLength;
             DEBUGLOG(6, "seq.start:%i, literals=%u, match.start:%i",
                         (int)(anchor-(const BYTE*)source), litLength, (int)(ip-(const BYTE*)source));
         }
 
-        printf("start compress end decode\n");
 _next_match:
         /* at this stage, the following variables must be correctly set :
          * - ip : at start of LZ operation
