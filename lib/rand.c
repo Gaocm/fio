@@ -129,7 +129,7 @@ uint64_t fill_random_buf(struct frand_state *fs, void *buf,
 
 	if (sizeof(int) != sizeof(long *))
 		r *= (unsigned long) __rand(fs);
-    r=0;
+    r=(unsigned long)0;
 	__fill_random_buf(buf, len, r);
 	return r;
 }
