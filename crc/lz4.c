@@ -926,6 +926,7 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
 
     /* Main Loop */
     for ( ; ; ) {
+        printf("start compress loop\n");
         const BYTE* match;
         BYTE* token;
         const BYTE* filledIp;
