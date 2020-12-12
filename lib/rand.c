@@ -178,9 +178,10 @@ void __fill_random_buf_percentage(uint64_t seed, void *buf,
 
 		if (pbytes)
 			(void)cpy_pattern(pattern, pbytes, buf, this_len);
-		else
-			memset(buf, 0, this_len);
-
+		else {
+            memset(buf, 0, this_len);
+            printf("fill zero\n");
+		}
 		len -= this_len;
 		buf += this_len;
 	}
