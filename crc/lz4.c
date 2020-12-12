@@ -1034,9 +1034,10 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
 
             if (litLength >= RUN_MASK) {
                 int len = (int)(litLength - RUN_MASK);
-                token = (RUN_MASK<<ML_BITS);
-                for(; len >= 255 ; len-=255) op++ = (unsigned)255;
-                op++ = len;
+                printf("%s\n",token);
+                *token = (RUN_MASK<<ML_BITS);
+                for(; len >= 255 ; len-=255) *op++ = 255;
+                *op++ = (BYTE)len;
             }
             else *token = (BYTE)(litLength<<ML_BITS);
 
