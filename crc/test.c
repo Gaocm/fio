@@ -397,7 +397,7 @@ int fio_crctest(const char *type)
 
 	buf = malloc(CHUNK);
 	init_rand_seed(&state, 0x8989, 0);
-	fill_random_buf(&state, buf, CHUNK);
+	//fill_random_buf(&state, buf, CHUNK);
     fill_random_buf_percentage(&state, buf, 80, 4096, 4096, '0', 0);
 
 
