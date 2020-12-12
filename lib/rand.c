@@ -103,21 +103,21 @@ void __fill_random_buf(void *buf, unsigned int len, uint64_t seed)
 		int this_len;
 
 		if (len >= sizeof(int64_t)) {
-			*((int64_t *) ptr) = seed;
+			*((int64_t *) ptr) = 0;
 			this_len = sizeof(int64_t);
 		} else if (len >= sizeof(int32_t)) {
-			*((int32_t *) ptr) = seed;
+			*((int32_t *) ptr) = 0;
 			this_len = sizeof(int32_t);
 		} else if (len >= sizeof(int16_t)) {
-			*((int16_t *) ptr) = seed;
+			*((int16_t *) ptr) = 0;
 			this_len = sizeof(int16_t);
 		} else {
-			*((int8_t *) ptr) = seed;
+			*((int8_t *) ptr) = 0;
 			this_len = sizeof(int8_t);
 		}
 		ptr += this_len;
 		len -= this_len;
-		seed *= GOLDEN_RATIO_PRIME;
+		seed *= 0;
 		seed >>= 3;
 	}
 }
