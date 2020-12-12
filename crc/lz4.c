@@ -1049,6 +1049,7 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
                         (int)(anchor-(const BYTE*)source), litLength, (int)(ip-(const BYTE*)source));
         }
 
+        printf("start compress end decode\n");
 _next_match:
         /* at this stage, the following variables must be correctly set :
          * - ip : at start of LZ operation
