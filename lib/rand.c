@@ -141,6 +141,8 @@ void __fill_random_buf_percentage(uint64_t seed, void *buf,
 {
 	unsigned int this_len;
 
+	printf("start fill function\n");
+
 	if (percentage == 100) {
 		if (pbytes)
 			(void)cpy_pattern(pattern, pbytes, buf, len);
@@ -152,6 +154,7 @@ void __fill_random_buf_percentage(uint64_t seed, void *buf,
 	if (segment > len)
 		segment = len;
 
+    printf("start fill process\n");
 	while (len) {
 		/*
 		 * Fill random chunk
