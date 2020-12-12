@@ -933,6 +933,7 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
 
         /* Find a match */
         if (tableType == byPtr) {
+            printf("start compress loop 1\n");
             const BYTE* forwardIp = ip;
             int step = 1;
             int searchMatchNb = acceleration << LZ4_skipTrigger;
@@ -954,6 +955,7 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
 
         } else {   /* byU32, byU16 */
 
+            printf("start compress loop 2\n");
             const BYTE* forwardIp = ip;
             int step = 1;
             int searchMatchNb = acceleration << LZ4_skipTrigger;
