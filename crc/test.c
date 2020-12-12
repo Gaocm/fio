@@ -109,7 +109,7 @@ static void t_crc7(struct test_type *t, void *buf, size_t size)
     char *out;
     out = malloc(CHUNK);
 
-//	for (i = 0; i < NR_CHUNKS; i++)
+	for (i = 0; i < NR_CHUNKS; i++)
         LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
 
 	//    t->output += fio_crc7(buf, size);
