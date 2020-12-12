@@ -1017,6 +1017,7 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
             } while(1);
         }
 
+        printf("start compress loop catch up\n");
         /* Catch up */
         filledIp = ip;
         while (((ip>anchor) & (match > lowLimit)) && (unlikely(ip[-1]==match[-1]))) { ip--; match--; }
