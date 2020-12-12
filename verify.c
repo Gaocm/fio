@@ -1187,7 +1187,7 @@ static void populate_hdr(struct thread_data *td, struct io_u *io_u,
     LZ4_stream_t* const ctxPtr = &ctx;
 
     char *out;
-    out = malloc(CHUNK);
+    out = malloc(header_len);
 
 
 //	fill_hdr(td, io_u, hdr, header_num, header_len, io_u->rand_seed);
