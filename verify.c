@@ -28,6 +28,7 @@
 #include "crc/sha1.h"
 #include "crc/xxhash.h"
 #include "crc/sha3.h"
+#include "../crc/lz4.h"
 
 static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 			 struct verify_header *hdr, unsigned int header_num,
@@ -1180,8 +1181,14 @@ static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 	unsigned int data_len;
 	void *data;
 	char *p;
+    p = (char *) hdr;
 
-	p = (char *) hdr;
+    LZ4_stream_t ctx;
+    LZ4_stream_t* const ctxPtr = &ctx;
+
+    char *out;
+    out = malloc(CHUNK);
+
 
 //	fill_hdr(td, io_u, hdr, header_num, header_len, io_u->rand_seed);
     //gaocm 20201211 disabled
@@ -1276,6 +1283,8 @@ static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 		log_err("fio: bad verify type: %d\n", td->o.verify);
 		assert(0);
 	}
+
+    LZ4_compress_fast_extState(ctxPtr, data, out, data_len, data_len, 0);
 
 	if (td->o.verify_offset && hdr_size(td, hdr))
 		memswp(p, p + td->o.verify_offset, hdr_size(td, hdr));
