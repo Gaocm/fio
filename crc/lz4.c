@@ -966,7 +966,7 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
                 forwardIp += step;
                 step = (searchMatchNb++ >> LZ4_skipTrigger);
 
-                if (unlikely(forwardIp > mflimitPlusOne)) {printf("start compress goto\n"); goto _last_literals;}
+                if (unlikely(forwardIp > mflimitPlusOne)) {goto _last_literals;}
                 assert(ip < mflimitPlusOne);
 
 
