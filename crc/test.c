@@ -110,7 +110,7 @@ static void t_crc7(struct test_type *t, void *buf, size_t size)
 
     printf("start compress\n");
 
-	for (i = 0; i < NR_CHUNKS; i++)
+//	for (i = 0; i < NR_CHUNKS; i++)
         LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
 
 	    //t->output += fio_crc7(buf, size);
@@ -399,7 +399,7 @@ int fio_crctest(const char *type)
 	buf = malloc(CHUNK);
 	init_rand_seed(&state, 0x8989, 0);
 	//fill_random_buf(&state, buf, CHUNK);
-    fill_random_buf_percentage(&state, buf, 80, 4096, 4096, temp, 0);
+    fill_random_buf_percentage(&state, buf, 80, CHUNK, CHUNK, temp, 0);
     printf("after fill, before compress\n");
 
 	for (i = 0; t[i].name; i++) {
