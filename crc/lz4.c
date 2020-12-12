@@ -1037,11 +1037,12 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
 
             printf("start compress does not goto\n");
             if (litLength >= RUN_MASK) {
+                printf("start compress run mask 1\n");
                 int len = (int)(litLength - RUN_MASK);
                 *token = (RUN_MASK<<ML_BITS);
                 for(; len >= 255 ; len-=255) *op++ = 255;
                 *op++ = (BYTE)len;
-                printf("start compress run mask\n");
+                printf("start compress run mask 2\n");
             }
             else *token = (BYTE)(litLength<<ML_BITS);
 
