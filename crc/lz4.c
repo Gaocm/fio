@@ -1034,16 +1034,21 @@ LZ4_FORCE_INLINE int LZ4_compress_generic_validated(
                 op--;
                 goto _last_literals;
             }
+
+            printf("start compress does not goto\n");
             if (litLength >= RUN_MASK) {
                 int len = (int)(litLength - RUN_MASK);
                 *token = (RUN_MASK<<ML_BITS);
                 for(; len >= 255 ; len-=255) *op++ = 255;
                 *op++ = (BYTE)len;
+                printf("start compress run mask\n");
             }
             else *token = (BYTE)(litLength<<ML_BITS);
 
+            printf("start compress start copy\n");
             /* Copy Literals */
             LZ4_wildCopy8(op, anchor, op+litLength);
+            printf("start compress end copy\n");
             op+=litLength;
             DEBUGLOG(6, "seq.start:%i, literals=%u, match.start:%i",
                         (int)(anchor-(const BYTE*)source), litLength, (int)(ip-(const BYTE*)source));
