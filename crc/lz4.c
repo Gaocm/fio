@@ -411,7 +411,7 @@ void LZ4_wildCopy8(void* dstPtr, const void* srcPtr, void* dstEnd)
     const BYTE* s = (const BYTE*)srcPtr;
     BYTE* const e = (BYTE*)dstEnd;
     printf("memcpy start\n");
-    do { LZ4_memcpy(d,s,8); d+=8; s+=8; } while (d<e);
+    do { LZ4_memcpy(d,s,8); printf("memcpy start %d\t%d\n",d,s); d+=8; s+=8; } while (d<e);
 }
 
 static const unsigned inc32table[8] = {0, 1, 2,  1,  0,  4, 4, 4};
