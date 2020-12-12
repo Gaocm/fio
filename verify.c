@@ -28,7 +28,7 @@
 #include "crc/sha1.h"
 #include "crc/xxhash.h"
 #include "crc/sha3.h"
-#include "../crc/lz4.h"
+#include "crc/lz4.h"
 
 static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 			 struct verify_header *hdr, unsigned int header_num,
