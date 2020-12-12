@@ -380,7 +380,7 @@ int fio_crctest(const char *type)
 	int i, first = 1;
 	void *buf;
 	char *temp;
-    unsigned long long this_write;
+    unsigned long long this_len;
     unsigned int perc;
 
 	crc32c_arm64_probe();
@@ -400,11 +400,12 @@ int fio_crctest(const char *type)
 
 	this_write = CHUNK;
 	perc = 80;
-
+    this_len = ((unsigned int)this_write * (100 - perc)) / 100;
 	buf = malloc(CHUNK);
+    memset(buf, 0, CHUNK);
 	init_rand_seed(&state, 0x8989, 0);
-	fill_random_buf(&state, buf, CHUNK);
-    //fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
+	fill_random_buf(&state, buf, this_len);
+   // fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
 
 	for (i = 0; t[i].name; i++) {
 		struct timespec ts;
