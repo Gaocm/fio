@@ -378,6 +378,7 @@ int fio_crctest(const char *type)
 	struct frand_state state;
 	int i, first = 1;
 	void *buf;
+	void *temp;
 
 	crc32c_arm64_probe();
 	crc32c_intel_probe();
@@ -396,7 +397,9 @@ int fio_crctest(const char *type)
 
 	buf = malloc(CHUNK);
 	init_rand_seed(&state, 0x8989, 0);
-	fill_random_buf(&state, buf, CHUNK);
+//	fill_random_buf(&state, buf, CHUNK);
+    fill_random_buf_percentage(&state, buf, 80, CHUNK, CHUNK, temp, 0);
+
 
 	for (i = 0; t[i].name; i++) {
 		struct timespec ts;
