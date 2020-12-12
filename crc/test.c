@@ -399,7 +399,7 @@ int fio_crctest(const char *type)
 	}
 
 	this_write = CHUNK;
-	perc = 50;
+	perc = 0;
     this_len = ((unsigned long long)this_write * (100 - perc)) / 100;
 	buf = malloc(CHUNK);
     //memset(buf, 0, CHUNK);
@@ -427,6 +427,7 @@ int fio_crctest(const char *type)
 
 		fio_gettime(&ts, NULL);
 		t[i].fn(&t[i], buf, CHUNK);
+		t_crc7(&t[i], buf, CHUNK);
 		usec = utime_since_now(&ts);
 
 		if (usec) {
