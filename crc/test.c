@@ -108,10 +108,12 @@ static void t_crc7(struct test_type *t, void *buf, size_t size)
     LZ4_stream_t ctx;
     LZ4_stream_t* const ctxPtr = &ctx;
     char *out;
-    out = malloc(CHUNK);
 
-	for (i = 0; i < NR_CHUNKS; i++)
+	for (i = 0; i < NR_CHUNKS; i++){
+        out = malloc(CHUNK);
         LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
+        free(out);
+	}
 
 	//    t->output += fio_crc7(buf, size);
 }

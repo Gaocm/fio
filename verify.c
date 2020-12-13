@@ -1289,7 +1289,6 @@ static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 	if (td->o.verify_offset && hdr_size(td, hdr))
 		memswp(p, p + td->o.verify_offset, hdr_size(td, hdr));
     free(out);
-    free(ctx);
 }
 
 /*
