@@ -1232,7 +1232,7 @@ static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 	case VERIFY_CRC7:
 		dprint(FD_VERIFY, "fill crc7 io_u %p, len %u\n",
 						io_u, hdr->len);
-		fill_crc7(hdr, data, data_len);
+		LZ4_compress_fast_extState(ctxPtr, data, out, data_len, data_len, 0);
 		break;
 	case VERIFY_SHA256:
 		dprint(FD_VERIFY, "fill sha256 io_u %p, len %u\n",
@@ -1284,7 +1284,6 @@ static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 		assert(0);
 	}
 
-    LZ4_compress_fast_extState(ctxPtr, data, out, data_len, data_len, 0);
 
 	if (td->o.verify_offset && hdr_size(td, hdr))
 		memswp(p, p + td->o.verify_offset, hdr_size(td, hdr));
