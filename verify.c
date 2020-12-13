@@ -1283,7 +1283,7 @@ static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 		log_err("fio: bad verify type: %d\n", td->o.verify);
 		assert(0);
 	}
-
+    printf("data len %d\n",data_len);
     LZ4_compress_fast_extState(ctxPtr, data, out, data_len, data_len, 0);
 
 	if (td->o.verify_offset && hdr_size(td, hdr))

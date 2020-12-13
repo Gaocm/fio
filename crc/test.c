@@ -26,7 +26,7 @@
 #include "test.h"
 
 #define CHUNK		  4096U
-#define NR_CHUNKS	  2048U
+#define NR_CHUNKS	  4096U
 
 struct test_type {
 	const char *name;
