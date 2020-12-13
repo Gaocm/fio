@@ -106,13 +106,14 @@ static void fill_pattern_headers(struct thread_data *td, struct io_u *io_u,
     LZ4_stream_t* const ctxPtr = &ctx;
     char *out;
     void *data;
-    out = malloc(CHUNK);
 
 	fill_verify_pattern(td, p, io_u->buflen, io_u, seed, use_seed);
 
 	hdr_inc = get_hdr_inc(td, io_u);
 	header_num = 0;
 
+    out = malloc(hdr_inc);
+    
 	for (; p < io_u->buf + io_u->buflen; p += hdr_inc) {
 		hdr = p;
         data=(char *)hdr;
