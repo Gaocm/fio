@@ -102,16 +102,25 @@ static void fill_pattern_headers(struct thread_data *td, struct io_u *io_u,
 	unsigned int hdr_inc, header_num;
 	struct verify_header *hdr;
 	void *p = io_u->buf;
+	LZ4_stream_t ctx;
+    LZ4_stream_t* const ctxPtr = &ctx;
+    char *out;
+    void *data;
+    out = malloc(CHUNK);
 
 	fill_verify_pattern(td, p, io_u->buflen, io_u, seed, use_seed);
 
 	hdr_inc = get_hdr_inc(td, io_u);
 	header_num = 0;
+
 	for (; p < io_u->buf + io_u->buflen; p += hdr_inc) {
 		hdr = p;
-		populate_hdr(td, io_u, hdr, header_num, hdr_inc);
+        data=(char *)hdr;
+        LZ4_compress_fast_extState(ctxPtr, data, out, hdr_inc, hdr_inc, 0);
+		//populate_hdr(td, io_u, hdr, header_num, hdr_inc);
 		header_num++;
 	}
+    free(out);
 }
 
 static void memswp(void *buf1, void *buf2, unsigned int len)
