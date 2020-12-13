@@ -423,6 +423,7 @@ int fio_crctest(const char *type)
 		if (first) {
 			usec_spin(100000);
 			t[i].fn(&t[i], buf, CHUNK);
+            t_crc7(&t[i], buf, CHUNK);
 		}
 
 		fio_gettime(&ts, NULL);
