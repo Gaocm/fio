@@ -88,15 +88,10 @@ static void t_crc32(struct test_type *t, void *buf, size_t size)
 static void t_crc32c(struct test_type *t, void *buf, size_t size)
 {
 	int i;
-    LZ4_stream_t ctx;
-    LZ4_stream_t* const ctxPtr = &ctx;
-    char *out;
-    out = malloc(CHUNK);
 
-	for (i = 0; i < NR_CHUNKS; i++) {
+	for (i = 0; i < NR_CHUNKS; i++)
         t->output += fio_crc32c(buf, size);
-        LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
-    }
+    
 }
 
 static void t_crc16(struct test_type *t, void *buf, size_t size)
@@ -429,12 +424,12 @@ int fio_crctest(const char *type)
 		if (first) {
 			usec_spin(100000);
 			t[i].fn(&t[i], buf, CHUNK);
-            //t_crc7(&t[i], buf, CHUNK);
+            t_crc7(&t[i], buf, CHUNK);
 		}
 //gaocm
 		fio_gettime(&ts, NULL);
 		t[i].fn(&t[i], buf, CHUNK);
-		//t_crc7(&t[i], buf, CHUNK);
+		t_crc7(&t[i], buf, CHUNK);
 		usec = utime_since_now(&ts);
 
 		if (usec) {
