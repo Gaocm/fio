@@ -425,7 +425,7 @@ int fio_crctest(const char *type)
 			t[i].fn(&t[i], buf, CHUNK);
             t_crc7(&t[i], buf, CHUNK);
 		}
-
+//gaocm
 		fio_gettime(&ts, NULL);
 		t[i].fn(&t[i], buf, CHUNK);
 		t_crc7(&t[i], buf, CHUNK);
