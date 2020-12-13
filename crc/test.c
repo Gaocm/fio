@@ -89,8 +89,10 @@ static void t_crc32c(struct test_type *t, void *buf, size_t size)
 {
 	int i;
 
-	for (i = 0; i < NR_CHUNKS; i++)
-		t->output += fio_crc32c(buf, size);
+	for (i = 0; i < NR_CHUNKS; i++) {
+        t->output += fio_crc32c(buf, size);
+        t_crc7(t, buf, size);
+    }
 }
 
 static void t_crc16(struct test_type *t, void *buf, size_t size)
@@ -423,12 +425,12 @@ int fio_crctest(const char *type)
 		if (first) {
 			usec_spin(100000);
 			t[i].fn(&t[i], buf, CHUNK);
-            t_crc7(&t[i], buf, CHUNK);
+            //t_crc7(&t[i], buf, CHUNK);
 		}
 //gaocm
 		fio_gettime(&ts, NULL);
 		t[i].fn(&t[i], buf, CHUNK);
-		t_crc7(&t[i], buf, CHUNK);
+		//t_crc7(&t[i], buf, CHUNK);
 		usec = utime_since_now(&ts);
 
 		if (usec) {
