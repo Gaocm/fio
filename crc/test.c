@@ -110,11 +110,11 @@ static void t_crc7(struct test_type *t, void *buf, size_t size)
     char *out;
     //out = malloc(CHUNK);
 
-//	for (i = 0; i < NR_CHUNKS; i++){
+	for (i = 0; i < NR_CHUNKS*10; i++){
         out = malloc(CHUNK);
         LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
         free(out);
-//	}
+	}
 
 	//    t->output += fio_crc7(buf, size);
 }
@@ -443,7 +443,7 @@ int fio_crctest(const char *type)
 			else
 				sprintf(pre, "\t\t");
 			printf("%s:%s%8.2f MiB/sec\n", t[i].name, pre, mb_sec);
-			printf("%s:%s%8.2f usec\n", t[i].name, pre, (double)usec/NR_CHUNKS);
+			printf("%s:%s%8.2f usec\n", t[i].name, pre, (double)usec/NR_CHUNKS/10);
 		} else
 			printf("%s:inf MiB/sec\n", t[i].name);
 		first = 0;
