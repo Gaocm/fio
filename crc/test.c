@@ -434,7 +434,7 @@ int fio_crctest(const char *type)
         for (i = 0; i < NR_CHUNKS; i++){
             //init_rand_seed(&state, 0x8989, 0);
             //fill_random_buf(&state, buf, CHUNK);
-            fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
+           // fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
             t[i].fn(&t[i], buf, CHUNK);
         }
 		//t_crc7(&t[i], buf, CHUNK);
