@@ -112,16 +112,16 @@ static void fill_pattern_headers(struct thread_data *td, struct io_u *io_u,
 	hdr_inc = get_hdr_inc(td, io_u);
 	header_num = 0;
 
-    out = malloc(hdr_inc);
-    
+    //out = malloc(hdr_inc);
+
 	for (; p < io_u->buf + io_u->buflen; p += hdr_inc) {
 		hdr = p;
-        data=(char *)hdr;
-        LZ4_compress_fast_extState(ctxPtr, data, out, hdr_inc, hdr_inc, 0);
-		//populate_hdr(td, io_u, hdr, header_num, hdr_inc);
+        //data=(char *)hdr;
+        //LZ4_compress_fast_extState(ctxPtr, data, out, hdr_inc, hdr_inc, 0);
+		populate_hdr(td, io_u, hdr, header_num, hdr_inc);
 		header_num++;
 	}
-    free(out);
+    //free(out);
 }
 
 static void memswp(void *buf1, void *buf2, unsigned int len)
@@ -893,7 +893,7 @@ int verify_io_u(struct thread_data *td, struct io_u **io_u_ptr)
 	void *p;
 	int ret;
 
-	if (td->o.verify == VERIFY_NULL || io_u->ddir != DDIR_READ)
+	if (td->o.verify == VERIFY_NULL ||td->o.verify == VERIFY_HDR_ONLY || io_u->ddir != DDIR_READ)
 		return 0;
 	/*
 	 * If the IO engine is faking IO (like null), then just pretend
