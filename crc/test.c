@@ -102,18 +102,37 @@ static void t_crc16(struct test_type *t, void *buf, size_t size)
 		t->output += fio_crc16(buf, size);
 }
 
-static void t_crc7(struct test_type *t, void *buf, size_t size)
+static void  t_crc7(struct test_type *t, void *buf, size_t size)
 {
 	int i;
     LZ4_stream_t ctx;
     LZ4_stream_t* const ctxPtr = &ctx;
     char *out;
+    struct frand_state state;
     //out = malloc(CHUNK);
+    void *buf;
+    char *temp;
+    unsigned long long this_len;
+    unsigned int perc;
+    unsigned int this_write;
 
-	for (i = 0; i < NR_CHUNKS*10; i++){
+
+    this_write = CHUNK;
+    perc = 0;
+    this_len = ((unsigned long long)this_write * (100 - perc)) / 100;
+    for (i = 0; i < NR_CHUNKS; i++){
+        buf = malloc(CHUNK);
+        //memset(buf, 0, CHUNK);
+        init_rand_seed(&state, 0x8989, 0);
+        //fill_random_buf(&state, buf, CHUNK);
+        fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
+
+
+
         out = malloc(CHUNK);
         LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
         free(out);
+        free(buf);
 	}
 
 	//    t->output += fio_crc7(buf, size);
@@ -407,9 +426,9 @@ int fio_crctest(const char *type)
     this_len = ((unsigned long long)this_write * (100 - perc)) / 100;
 	buf = malloc(CHUNK);
     //memset(buf, 0, CHUNK);
-	init_rand_seed(&state, 0x8989, 0);
+	//init_rand_seed(&state, 0x8989, 0);
 	//fill_random_buf(&state, buf, CHUNK);
-    fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
+    //fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
 
 	for (i = 0; t[i].name; i++) {
 		struct timespec ts;
@@ -443,7 +462,7 @@ int fio_crctest(const char *type)
 			else
 				sprintf(pre, "\t\t");
 			printf("%s:%s%8.2f MiB/sec\n", t[i].name, pre, mb_sec);
-			printf("%s:%s%8.2f usec\n", t[i].name, pre, (double)usec/NR_CHUNKS/10);
+			printf("%s:%s%8.2f usec\n", t[i].name, pre, (double)usec/NR_CHUNKS);
 		} else
 			printf("%s:inf MiB/sec\n", t[i].name);
 		first = 0;
