@@ -110,7 +110,7 @@ static void  t_crc7(struct test_type *t, void *buf, size_t size)
     char *out;
     struct frand_state state;
     //out = malloc(CHUNK);
-    void *buf;
+    void *data;
     char *temp;
     unsigned long long this_len;
     unsigned int perc;
@@ -121,18 +121,18 @@ static void  t_crc7(struct test_type *t, void *buf, size_t size)
     perc = 0;
     this_len = ((unsigned long long)this_write * (100 - perc)) / 100;
     for (i = 0; i < NR_CHUNKS; i++){
-        buf = malloc(CHUNK);
+        data = malloc(CHUNK);
         //memset(buf, 0, CHUNK);
         init_rand_seed(&state, 0x8989, 0);
         //fill_random_buf(&state, buf, CHUNK);
-        fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
+        fill_random_buf_percentage(&state, data, perc, this_write, this_write, temp, 0);
 
 
 
         out = malloc(CHUNK);
-        LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
+        LZ4_compress_fast_extState(ctxPtr, data, out, size, size, 0);
         free(out);
-        free(buf);
+        free(data);
 	}
 
 	//    t->output += fio_crc7(buf, size);
