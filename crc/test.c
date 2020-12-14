@@ -108,12 +108,13 @@ static void t_crc7(struct test_type *t, void *buf, size_t size)
     LZ4_stream_t ctx;
     LZ4_stream_t* const ctxPtr = &ctx;
     char *out;
+    out = malloc(CHUNK);
 
-	for (i = 0; i < NR_CHUNKS; i++){
+//	for (i = 0; i < NR_CHUNKS; i++){
         out = malloc(CHUNK);
         LZ4_compress_fast_extState(ctxPtr, buf, out, size, size, 0);
         free(out);
-	}
+//	}
 
 	//    t->output += fio_crc7(buf, size);
 }
@@ -385,10 +386,6 @@ int fio_crctest(const char *type)
     unsigned long long this_len;
     unsigned int perc;
     unsigned int this_write;
-    LZ4_stream_t ctx;
-    LZ4_stream_t* const ctxPtr = &ctx;
-    char *out;
-
 
 	crc32c_arm64_probe();
 	crc32c_intel_probe();
@@ -434,20 +431,12 @@ int fio_crctest(const char *type)
 		}
 //gaocm
 		fio_gettime(&ts, NULL);
-
-
         for (i = 0; i < NR_CHUNKS; i++){
-            out = malloc(CHUNK);
-            buf = malloc(CHUNK);
             init_rand_seed(&state, 0x8989, 0);
             //fill_random_buf(&state, buf, CHUNK);
             fill_random_buf_percentage(&state, buf, perc, this_write, this_write, temp, 0);
-            LZ4_compress_fast_extState(ctxPtr, buf, out, this_write, this_write, 0);
-            free(out);
-            free(buf);
+            t[i].fn(&t[i], buf, CHUNK);
         }
-
-		//t[i].fn(&t[i], buf, CHUNK);
 		//t_crc7(&t[i], buf, CHUNK);
 		usec = utime_since_now(&ts);
 
