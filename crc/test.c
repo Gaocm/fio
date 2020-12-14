@@ -108,7 +108,7 @@ static void t_crc7(struct test_type *t, void *buf, size_t size)
     LZ4_stream_t ctx;
     LZ4_stream_t* const ctxPtr = &ctx;
     char *out;
-    out = malloc(CHUNK);
+    //out = malloc(CHUNK);
 
 //	for (i = 0; i < NR_CHUNKS; i++){
         out = malloc(CHUNK);
