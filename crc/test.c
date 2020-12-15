@@ -25,7 +25,7 @@
 #include "../crc/lz4.h"
 #include "test.h"
 
-#define CHUNK		  4096U
+#define CHUNK		  1024U
 #define NR_CHUNKS	  4096U
 
 struct test_type {
@@ -443,12 +443,12 @@ int fio_crctest(const char *type)
 		if (first) {
 			usec_spin(100000);
 			t[i].fn(&t[i], buf, CHUNK);
-            t_crc7(&t[i], buf, CHUNK);
+            //t_crc7(&t[i], buf, CHUNK);
 		}
 //gaocm
 		fio_gettime(&ts, NULL);
 		t[i].fn(&t[i], buf, CHUNK);
-        t_crc7(&t[i], buf, CHUNK);
+        //t_crc7(&t[i], buf, CHUNK);
 		usec = utime_since_now(&ts);
 
 		if (usec) {
