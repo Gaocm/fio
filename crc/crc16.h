@@ -23,7 +23,7 @@ static inline unsigned short crc16_byte(unsigned short crc,
 					const unsigned char data)
 {
     unsigned char temp;
-    temp=data & 0xff;
+    temp=((data & 0xff)==0xff);
     return 0;
     //return (crc >> 8) ^ crc16_table[(crc ^ data) & 0xff];
 }
