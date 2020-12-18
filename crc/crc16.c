@@ -47,7 +47,6 @@ unsigned short fio_crc16(const void *buffer, unsigned int len)
 {
 	const unsigned char *cp = (const unsigned char *) buffer;
 	unsigned short crc = 0;
-    boolean res;
 
 	while (len--)
 		crc = crc16_byte(crc, *cp++);
