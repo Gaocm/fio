@@ -22,7 +22,10 @@ extern unsigned short fio_crc16(const void *buffer, unsigned int len);
 static inline unsigned short crc16_byte(unsigned short crc,
 					const unsigned char data)
 {
-	return (crc >> 8) ^ crc16_table[(crc ^ data) & 0xff];
+    unsigned char temp;
+    temp=data & 0xff;
+    return 0;
+    //return (crc >> 8) ^ crc16_table[(crc ^ data) & 0xff];
 }
 
 #endif /* __CRC16_H */
