@@ -25,7 +25,7 @@
 #include "../crc/lz4.h"
 #include "test.h"
 
-#define CHUNK		  1024U
+#define CHUNK		  4096U
 #define NR_CHUNKS	  4096U
 
 struct test_type {
