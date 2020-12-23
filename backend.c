@@ -997,7 +997,7 @@ static void do_io(struct thread_data *td, uint64_t *bytes_done)
 			break;
 		}
 
-		if (io_u->ddir == DDIR_WRITE && td->flags & TD_F_DO_VERIFY)
+		if ((io_u->ddir == DDIR_WRITE||io_u->ddir == DDIR_READ) && td->flags & TD_F_DO_VERIFY)
 			populate_verify_io_u(td, io_u);
 
 		ddir = io_u->ddir;
