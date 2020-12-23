@@ -1284,7 +1284,7 @@ static void populate_hdr(struct thread_data *td, struct io_u *io_u,
 						io_u, hdr->len);
 		fill_sha1(hdr, data, data_len);
 		break;
-	case VERIFY_H DR_ONLY:
+	case VERIFY_HDR_ONLY:
 	case VERIFY_PATTERN:
 	case VERIFY_PATTERN_NO_HDR:
 		/* nothing to do here */
