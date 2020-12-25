@@ -94,6 +94,12 @@ static void t_crc32c(struct test_type *t, void *buf, size_t size)
 
 }
 
+u_int64_t current_cycles()
+{
+    u_int32_t low, high;
+    asm volatile("rdtsc" : "=a"(low), "=d"(high));
+    return ((u_int64_t)low) | ((u_int64_t)high << 32);
+}
 static void t_crc16(struct test_type *t, void *buf, size_t size)
 {
 	int i;
@@ -402,12 +408,6 @@ static int list_types(void)
 	return 1;
 }
 
-u_int64_t current_cycles()
-{
-    u_int32_t low, high;
-    asm volatile("rdtsc" : "=a"(low), "=d"(high));
-    return ((u_int64_t)low) | ((u_int64_t)high << 32);
-}
 
 
 int fio_crctest(const char *type)
