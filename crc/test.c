@@ -408,6 +408,7 @@ int fio_crctest(const char *type)
     unsigned long long this_len;
     unsigned int perc;
     unsigned int this_write;
+    uint64_t start_cycle, end_cycle;
 
 	crc32c_arm64_probe();
 	crc32c_intel_probe();
@@ -453,8 +454,10 @@ int fio_crctest(const char *type)
 		}
 //gaocm
 		fio_gettime(&ts, NULL);
+        start_cycle = current_cycles();
 		t[i].fn(&t[i], buf, CHUNK);
         //t_crc7(&t[i], buf, CHUNK);
+        end_cycle = current_cycles();
 		usec = utime_since_now(&ts);
 
 		if (usec) {
@@ -466,6 +469,7 @@ int fio_crctest(const char *type)
 				sprintf(pre, "\t\t");
 			printf("%s:%s%8.2f MiB/sec\n", t[i].name, pre, mb_sec);
 			printf("%s:%s%8.2f usec\n", t[i].name, pre, (double)usec/NR_CHUNKS);
+            printf("%s:%s%8.2f cycles\n", t[i].name, pre, (double)(start_cycle-end_cycle)/NR_CHUNKS);
 		} else
 			printf("%s:inf MiB/sec\n", t[i].name);
 		first = 0;
