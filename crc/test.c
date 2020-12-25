@@ -397,6 +397,14 @@ static int list_types(void)
 	return 1;
 }
 
+u_int64_t current_cycles()
+{
+    u_int32_t low, high;
+    asm volatile("rdtsc" : "=a"(low), "=d"(high));
+    return ((u_int64_t)low) | ((u_int64_t)high << 32);
+}
+
+
 int fio_crctest(const char *type)
 {
 	unsigned int test_mask = 0;
