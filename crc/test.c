@@ -97,9 +97,15 @@ static void t_crc32c(struct test_type *t, void *buf, size_t size)
 static void t_crc16(struct test_type *t, void *buf, size_t size)
 {
 	int i;
-
+	struct frand_state state;
+    void *buf2;
+    buf2 = malloc(4096);
+    //memset(buf, 0, CHUNK);
+    init_rand_seed(&state, 0x8189, 0);
+    fill_random_buf(&state, buf2, 4096);
 	for (i = 0; i < NR_CHUNKS; i++)
-		t->output += fio_crc16(buf, size);
+	    strcmp(buf,buf2);
+		//t->output += fio_crc16(buf, size);
 }
 
 static void  t_crc7(struct test_type *t, void *buf, size_t size)
