@@ -115,7 +115,7 @@ static void t_crc16(struct test_type *t, void *buf, size_t size)
 	for (i = 0; i < NR_CHUNKS; i++)
 	    strcmp(buf,buf2);
     end_cycle = current_cycles();
-    printf("%s:%8.2f cycles\n", t[i].name, (double)(end_cycle-start_cycle)/NR_CHUNKS);
+    printf("%s:%8.2f\t%8.2f cycles\n", t[i].name, (double)end_cycle,(double)(end_cycle-start_cycle)/NR_CHUNKS);
 		//t->output += fio_crc16(buf, size);
 }
 
