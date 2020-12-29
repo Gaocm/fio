@@ -96,6 +96,14 @@ static unsigned int get_hdr_inc(struct thread_data *td, struct io_u *io_u)
 	return hdr_inc;
 }
 
+
+u_int64_t current_cycles()
+{
+    u_int32_t low, high;
+    asm volatile("rdtsc" : "=a"(low), "=d"(high));
+    return ((u_int64_t)low) | ((u_int64_t)high << 32);
+}
+
 static void fill_pattern_headers(struct thread_data *td, struct io_u *io_u,
 				 uint64_t seed, int use_seed)
 {
@@ -106,6 +114,7 @@ static void fill_pattern_headers(struct thread_data *td, struct io_u *io_u,
     LZ4_stream_t* const ctxPtr = &ctx;
     char *out;
     void *data;
+    uint64_t start_cycle;
 
 	fill_verify_pattern(td, p, io_u->buflen, io_u, seed, use_seed);
 
@@ -118,7 +127,9 @@ static void fill_pattern_headers(struct thread_data *td, struct io_u *io_u,
 		hdr = p;
         //data=(char *)hdr;
         //LZ4_compress_fast_extState(ctxPtr, data, out, hdr_inc, hdr_inc, 0);
-		populate_hdr(td, io_u, hdr, header_num, hdr_inc);
+        start_cycle = current_cycles();
+        if(start_cycle%2 == 0)
+		    populate_hdr(td, io_u, hdr, header_num, hdr_inc);
 		header_num++;
 	}
     //free(out);

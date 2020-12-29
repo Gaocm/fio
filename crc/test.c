@@ -94,28 +94,19 @@ static void t_crc32c(struct test_type *t, void *buf, size_t size)
 
 }
 
-u_int64_t current_cycles()
-{
-    u_int32_t low, high;
-    asm volatile("rdtsc" : "=a"(low), "=d"(high));
-    return ((u_int64_t)low) | ((u_int64_t)high << 32);
-}
+
 static void t_crc16(struct test_type *t, void *buf, size_t size)
 {
 	int i;
 	struct frand_state state;
     void *buf2;
-    uint64_t start_cycle, end_cycle;
 
     buf2 = malloc(4096);
     //memset(buf, 0, CHUNK);
     init_rand_seed(&state, 0x8189, 0);
     fill_random_buf(&state, buf2, 4096);
-    start_cycle = current_cycles();
 	for (i = 0; i < NR_CHUNKS; i++)
 	    strcmp(buf,buf2);
-    end_cycle = current_cycles();
-    printf("%s:%8.2f\t%8.2f\t%8.2f cycles\n", t[i].name, (double)start_cycle,(double)end_cycle,(double)(end_cycle-start_cycle)/NR_CHUNKS);
 		//t->output += fio_crc16(buf, size);
 }
 
