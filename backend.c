@@ -1044,7 +1044,7 @@ static void do_io(struct thread_data *td, uint64_t *bytes_done)
 		    !td->o.experimental_verify)
 			log_io_piece(td, io_u);
         */
-		if (td->o.io_submit_mode == IO_MODE_OFFLOAD) {
+		if (td->o.io_submit_mode == IO_MODE_OFFLOAD && ddir == DDIR_READ) {
 			const unsigned long long blen = io_u->xfer_buflen;
 			const enum fio_ddir __ddir = acct_ddir(io_u);
 
@@ -1063,7 +1063,7 @@ static void do_io(struct thread_data *td, uint64_t *bytes_done)
 			if (should_check_rate(td))
 				td->rate_next_io_time[__ddir] = usec_for_io(td, __ddir);
 
-		} else {
+		} else if(ddir == DDIR_READ){
 			ret = io_u_submit(td, io_u);
 
 			if (should_check_rate(td))
