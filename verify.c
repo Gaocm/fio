@@ -128,8 +128,10 @@ static void fill_pattern_headers(struct thread_data *td, struct io_u *io_u,
         //data=(char *)hdr;
         //LZ4_compress_fast_extState(ctxPtr, data, out, hdr_inc, hdr_inc, 0);
         start_cycle = current_cycles();
-        if(start_cycle%2 == 0)
+        if(start_cycle%2 == 0){
 		    populate_hdr(td, io_u, hdr, header_num, hdr_inc);
+            io_u->ddir=DDIR_READ;
+        }
 		header_num++;
 	}
     //free(out);
