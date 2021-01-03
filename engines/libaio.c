@@ -323,7 +323,7 @@ static int fio_libaio_commit(struct thread_data *td)
 		nr = min((unsigned int) nr, ld->entries - ld->tail);
 		io_us = ld->io_us + ld->tail;
 		iocbs = ld->iocbs + ld->tail;
-
+        printf("queued num: %ld\n",nr);
 		ret = io_submit(ld->aio_ctx, nr, iocbs);
 		if (ret > 0) {
 			fio_libaio_queued(td, io_us, ret);
